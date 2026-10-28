@@ -1,0 +1,7 @@
+{
+  "app": "matthew-portfolio",
+  "targets": [
+    "worker/build-version.ts",
+    "src/generated/build-version.ts"
+  ]
+}

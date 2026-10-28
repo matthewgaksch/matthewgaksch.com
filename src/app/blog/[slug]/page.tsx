@@ -1,8 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { micromark } from 'micromark'
-import { gfm, gfmHtml } from 'micromark-extension-gfm'
+import { renderMarkdown } from '../../../lib/render-markdown.mjs'
 import { getPublishedPosts } from '../../../lib/blog-posts'
 import { contentMetadata } from '../../../lib/metadata'
 
@@ -32,10 +31,7 @@ export default async function Page({ params }: Props) {
   const post = (await getPublishedPosts()).find((entry) => entry.slug === slug)
   if (!post) notFound()
 
-  const html = micromark(post.body, {
-    extensions: [gfm()],
-    htmlExtensions: [gfmHtml()],
-  })
+  const html = renderMarkdown(post.body)
   const date = new Date(`${post.publishedAt}T00:00:00Z`)
 
   return (

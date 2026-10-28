@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "shadcn/tailwind.css";
+@import "./shadcn.css";
 
 @custom-variant dark (&:is([data-theme="dark"] *));
 
@@ -590,3 +590,35 @@ button, a { outline-offset: 4px; }
     @apply font-sans;
   }
 }
+
+/* GitHub contribution calendar: the site's existing neutral theme in both modes. */
+.contributions-content { padding-top: var(--content-top); --contribution-0: var(--surface); --contribution-1: color-mix(in srgb, var(--foreground) 20%, var(--background)); --contribution-2: color-mix(in srgb, var(--foreground) 40%, var(--background)); --contribution-3: color-mix(in srgb, var(--foreground) 62%, var(--background)); --contribution-4: color-mix(in srgb, var(--foreground) 85%, var(--background)); }
+.contributions-profile { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; color: var(--muted); font-size: 13px; transition: color .18s ease; }
+.contributions-profile:hover { color: var(--foreground); }
+.contributions-profile span { text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 4px; transition: text-decoration-color .18s ease; }
+.contributions-profile:hover span { text-decoration-color: currentColor; }
+.contributions-scroll { max-width: 100%; overflow-x: auto; padding: 2px 2px 10px; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+.contributions-calendar { display: block; width: 100%; min-width: 791px; height: auto; max-width: none; overflow: visible; }
+.contributions-months { fill: var(--subtle); font-size: 11px; font-family: "Geist Mono", monospace; }
+.contributions-content [data-level="0"] { fill: var(--contribution-0); }
+.contributions-content [data-level="1"] { fill: var(--contribution-1); }
+.contributions-content [data-level="2"] { fill: var(--contribution-2); }
+.contributions-content [data-level="3"] { fill: var(--contribution-3); }
+.contributions-content [data-level="4"] { fill: var(--contribution-4); }
+.contributions-day { outline: none; cursor: default; }
+.contributions-day rect { stroke: var(--border); stroke-width: .5; transition: stroke .15s ease, filter .15s ease; }
+.contributions-day:hover rect, .contributions-day:focus-visible rect, .contributions-day[data-popup-open] rect { stroke: var(--foreground); stroke-width: 1.5; }
+.contributions-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px 20px; margin: 12px 0 0; color: var(--muted); font-size: 12px; }
+.contributions-footer p { margin: 0; }
+.contributions-legend { display: flex; align-items: center; gap: 5px; }
+.contributions-legend span:first-child { margin-right: 3px; }
+.contributions-legend span:last-child { margin-left: 3px; }
+.contributions-placeholder { display: grid; place-items: center; min-height: 177px; text-align: center; color: var(--muted); font-size: 13px; }
+.contributions-placeholder a { color: var(--foreground); text-decoration: underline; text-underline-offset: 3px; }
+.contributions-spinner { animation: contributions-spin 1s linear infinite; }
+.contributions-tooltip-positioner { z-index: 50; }
+.contributions-tooltip { border: 1px solid var(--border); border-radius: 6px; background: var(--popover); padding: 9px 12px; color: var(--foreground); box-shadow: 0 4px 18px #0002; font-size: 12px; line-height: 1.5; transform-origin: var(--transform-origin); transition: opacity .15s ease, transform .15s ease; }
+.contributions-tooltip[data-starting-style], .contributions-tooltip[data-ending-style] { opacity: 0; transform: translateY(3px); }
+@keyframes contributions-spin { to { transform: rotate(360deg); } }
+@media (max-width: 520px) { .contributions-section .home-section-heading { align-items: flex-start; flex-direction: column; gap: 4px; } .contributions-footer { font-size: 11px; } }
+@media (prefers-reduced-motion: reduce) { .contributions-spinner { animation: none; } .contributions-tooltip, .contributions-day rect, .contributions-profile, .contributions-profile span { transition: none; } }

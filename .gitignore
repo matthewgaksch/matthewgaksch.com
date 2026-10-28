@@ -13,3 +13,10 @@ next-env.d.ts
 *.log
 coverage/
 /reports/
+
+# Build-time release metadata (generated; never runtime configuration).
+worker/build-version.ts
+src/generated/build-version.ts
+
+# Generated from the reviewed Wrangler configuration during typecheck.
+/worker-configuration.d.ts

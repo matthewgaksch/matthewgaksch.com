@@ -1,5 +1,6 @@
 import { About } from '../components/sections/About'
 import { EducationList } from '../components/sections/EducationList'
+import { GitHubContributions } from '../components/sections/GitHubContributions'
 import { Hero } from '../components/sections/Hero'
 import { ProfileDetails } from '../components/sections/ProfileDetails'
 import { ProjectsList } from '../components/sections/ProjectsList'
@@ -18,6 +19,7 @@ export function HomePage() {
         <div className="home-section-heading shell"><h2 id="projects-title">Projects</h2></div>
         <ProjectsList headingLevel={3} />
       </section>
+      <GitHubContributions />
       <section className="home-section" id="education" aria-labelledby="education-title">
         <div className="home-section-heading shell"><h2 id="education-title">Education</h2></div>
         <div className="shell"><EducationList headingLevel={3} /></div>

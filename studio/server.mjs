@@ -4,8 +4,7 @@ import { readFile, readdir, mkdir, rename, writeFile } from 'node:fs/promises'
 import { randomUUID } from 'node:crypto'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { micromark } from 'micromark'
-import { gfm, gfmHtml } from 'micromark-extension-gfm'
+import { renderMarkdown } from '../src/lib/render-markdown.mjs'
 import sharp from 'sharp'
 import { syncImageReferences } from './blog-images.mjs'
 import { validatePostInput, validateSavedPost } from '../src/lib/blog-schema.mjs'
@@ -99,6 +98,9 @@ const assets = {
 }
 
 createServer(async (request, response) => {
+  response.setHeader('X-Frame-Options', 'DENY')
+  response.setHeader('Referrer-Policy', 'no-referrer')
+  response.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: https:; font-src 'self'; connect-src 'self'; object-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'")
   try {
     if (request.headers.host !== `127.0.0.1:${port}`) return json(response, 403, { error: 'Local access only.' })
     const route = new URL(request.url, origin).pathname
@@ -109,7 +111,7 @@ createServer(async (request, response) => {
       const body = await readBody(request)
       if (route === '/api/preview') {
         if (typeof body.body !== 'string' || body.body.length > 200_000) throw new Error('Article text is too large.')
-        return json(response, 200, { html: micromark(body.body, { extensions: [gfm()], htmlExtensions: [gfmHtml()] }) })
+        return json(response, 200, { html: renderMarkdown(body.body) })
       }
       if (route === '/api/posts') return json(response, 200, await savePost(body))
     }

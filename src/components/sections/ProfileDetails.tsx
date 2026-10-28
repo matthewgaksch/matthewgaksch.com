@@ -1,9 +1,9 @@
 import { ArrowUpRight, Mail, MapPin } from 'lucide-react'
-import { siGitlab, siInstagram, siX } from 'simple-icons'
+import { siGithub, siInstagram, siX } from 'simple-icons'
 import { links } from '../../content/links'
 import { BangkokClock } from './BangkokClock'
 
-const brandIcons = { instagram: siInstagram, x: siX, gitlab: siGitlab }
+const brandIcons = { instagram: siInstagram, x: siX, github: siGithub }
 
 function BrandIcon({ id }: { id: string }) {
   if (id === 'linkedin') {
