@@ -14,7 +14,7 @@ export function contentSecurityPolicy(documents) {
   }
   const policy = [
     "default-src 'self'", "base-uri 'self'", "object-src 'none'", "frame-ancestors 'none'",
-    `script-src 'self' ${[...hashes].sort().join(' ')}`, "script-src-attr 'none'",
+    `script-src 'self' ${[...hashes].sort().join(' ')} https://static.cloudflareinsights.com`, "script-src-attr 'none'",
     "style-src 'self' 'unsafe-inline'", "img-src 'self' data: https:", "font-src 'self'",
     "connect-src 'self' https://github-contributions-api.jogruber.de",
     "form-action 'none'", "frame-src 'none'", "worker-src 'none'", 'upgrade-insecure-requests',

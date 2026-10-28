@@ -27,7 +27,9 @@ test('static CSP hashes the actual inline scripts and permits only the required 
   const script = 'self.__next_f.push([1,"safe"]);'
   const policy = contentSecurityPolicy([`<script>${script}</script>`])
   assert.ok(policy.includes(`'sha256-${createHash('sha256').update(script).digest('base64')}'`))
-  assert.doesNotMatch(policy.match(/script-src [^;]+/)[0], /unsafe-inline|unsafe-eval/)
+  const scriptPolicy = policy.match(/script-src [^;]+/)[0]
+  assert.doesNotMatch(scriptPolicy, /unsafe-inline|unsafe-eval|\*/)
+  assert.ok(scriptPolicy.endsWith(' https://static.cloudflareinsights.com'))
   assert.match(policy, /connect-src 'self' https:\/\/github-contributions-api\.jogruber\.de;/)
   assert.notEqual(policy, contentSecurityPolicy([`<script>${script}changed</script>`]))
   assert.throws(() => contentSecurityPolicy(Array.from({ length: 50 }, (_, n) => `<script>unique(${n})</script>`)), /header line limit/)
